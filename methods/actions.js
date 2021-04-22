@@ -22,6 +22,17 @@ var functions = {
             })
         }
     },
+    checkUser: function (req, res) {
+        User.findOne({
+            name: req.body.name
+        }, function (err, user){
+            if(user){
+                res.status(400).send('User already exist');
+            }
+        }
+        
+        )
+    },
     authenticate: function (req, res) {
         User.findOne({
             name: req.body.name
