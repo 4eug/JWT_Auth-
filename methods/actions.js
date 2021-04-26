@@ -12,6 +12,14 @@ var functions = {
                 name: req.body.name,
                 password: req.body.password
             });
+            User.findOne({
+                name: req.body.name
+            }, function(err, user){
+                if(user){
+                    return res.status(400).send('User already exist');
+                }
+            }
+            )
             newUser.save(function (err, newUser) {
                 if (err) {
                     res.json({success: false, msg: 'Failed to save'})
@@ -22,17 +30,17 @@ var functions = {
             })
         }
     },
-    checkUser: function (req, res) {
-        User.findOne({
-            name: req.body.name
-        }, function (err, user){
-            if(user){
-                res.status(400).send('User already exist');
-            }
-        }
+    // checkUser: function (req, res) {
+    //     User.findOne({
+    //         name: req.body.name
+    //     }, function (err, user){
+    //         if(user){
+    //             res.status(400).send('User already exist');
+    //         }
+    //     }
         
-        )
-    },
+    //     )
+    // },
     authenticate: function (req, res) {
         User.findOne({
             name: req.body.name
